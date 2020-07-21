@@ -10,10 +10,9 @@ pygame.font.init()
 font = pygame.font.SysFont("comicsans",50)
 birds = [pygame.transform.scale2x(pygame.image.load(os.path.join("images","bird1.png"))),pygame.transform.scale2x(pygame.image.load(os.path.join("images","bird2.png"))),pygame.transform.scale2x(pygame.image.load(os.path.join("images","bird3.png")))]
 pipe = pygame.transform.scale2x(pygame.image.load(os.path.join("images","pipe.png")))
-base = pygame.transform.scale2x(pygame.image.load(os.path.join("images","base.png")))
+base = pygame.transform.scale2x(pygame.image.load(os.path.join("images","base1.png")))
 background = pygame.transform.scale2x(pygame.image.load(os.path.join("images","bg.png")))
 generation = 0
-DRAW_LINES = True
 #vel = velocity
 
 class Pipe:
@@ -125,22 +124,16 @@ def draw_window(window,birds,pipes,base,score,gen,pipe_ind):
     for pipe in pipes:
         pipe.draw(window)
     text = font.render("Score - "+str(score),1,(255,255,0))
-    window.blit(text,(win_width-10-text.get_width(),10))
+    window.blit(text,(win_width/2-60,10))
 
-    generations =  font.render("Generaton - "+str(gen-1),1,(255,0,255))
-    window.blit(generations,(win_width-10-generations.get_width(),win_height-100))
+    generations =  font.render("Generaton - "+str(gen-1),1,(255,0,0))
+    window.blit(generations,(win_width/2,win_height-100))
 
-    bird_score =  font.render("Birds Alive  - "+str(len(birds)),1,(255,0,255))
+    bird_score =  font.render("Birds Alive  - "+str(len(birds)),1,(255,0,0))
     window.blit(bird_score,(win_width-10-bird_score.get_width(),win_height-150))
 
     base.draw(window)
     for bird in birds:
-        if DRAW_LINES:
-            try:
-                pygame.draw.line(window, (255,0,0), (bird.x+bird.image.get_width()/2, bird.y + bird.image.get_height()/2), (pipes[pipe_ind].x + pipes[pipe_ind].pipe_top.get_width()/2, pipes[pipe_ind].height), 5)
-                pygame.draw.line(window, (255,0,0), (bird.x+bird.image.get_width()/2, bird.y + bird.image.get_height()/2), (pipes[pipe_ind].x + pipes[pipe_ind].pipe_bottom.get_width()/2, pipes[pipe_ind].bottom), 5)
-            except:
-                pass
         bird.draw(window)
     pygame.display.update()
 
@@ -193,7 +186,7 @@ def main(genomes,config):
                     birds.pop(x)
                     nets.pop(x)
                     gen.pop(x)
-                if not pipe.passed and pipe.x < bird.x:
+                if not pipe.passed and pipe.x+pipe.pipe_top.get_width() < bird.x:
                     pipe.passed = True
                     add_pipe = True
             if pipe.x+pipe.pipe_top.get_width()<-1:
