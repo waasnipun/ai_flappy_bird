@@ -15,5 +15,4 @@ Simple implementation of NEAT algorithm for evolving artificial neural networks
 
 ## References
 - [NEAT Paper](http://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf)
-- [Tech with Tim](https://github.com/techwithtim/NEAT-Flappy-Bird)
 
